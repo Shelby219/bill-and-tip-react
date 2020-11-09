@@ -29,13 +29,16 @@ class BillAndTip extends Component {
         genTip = (event) => {
             event.preventDefault();   
             let tip = parseFloat((this.state.tipPercentage/ 100) * this.state.total)
-            let total = parseFloat(this.state.total/100 + tip)
+
+            let newTotal = parseFloat(+this.state.total + +tip)
             this.setState({
-                tipFigure: tip,
-                billTotal: total
+                tipFigure: Math.round(tip * 100) / 100,
+                billTotal: newTotal
             })
+            console.log(tip)
+            console.log(newTotal)
         }
-        clearCache = (event) => {
+        clearCache = () => {
             window.location.reload(false);
         }
 
@@ -47,13 +50,13 @@ class BillAndTip extends Component {
                         <form onSubmit={this.genTip}>
                             <label>
                             Bill Total: $
-                            <input type="text" value={this.state.total} onChange={this.handleTotal} />
+                            <input type="number" value={this.state.total} onChange={this.handleTotal} />
                             </label>
                             <label>
                             Tip Percentage: %
-                            <input type="text" value={this.state.tipPercentage} onChange={this.handleTip} />
+                            <input type="number" value={this.state.tipPercentage} onChange={this.handleTip} />
                             </label>
-                            <input type="submit" value="Submit" />
+                            <input type="submit" value="Submit"/>
                         </form>
                         <p>Tip Amount: ${this.state.tipFigure}</p>
                         <p>Bill Total: ${this.state.billTotal}</p>
